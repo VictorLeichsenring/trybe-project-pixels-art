@@ -128,7 +128,12 @@ function gerarGrid() {
     let colunas = inputGridSize.value;
     if (colunas === '') {
         alert('Board inválido!')
-    } else {
+    } else if (colunas < 5) {
+        createBoard(5);
+    } else if (colunas > 50) {
+        createBoard(50);
+    } 
+    else {
         createBoard(colunas);
         storage();  
     }
