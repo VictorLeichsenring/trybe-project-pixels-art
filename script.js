@@ -1,9 +1,11 @@
 const pixelBoard = document.getElementById('pixel-board');
 const colorPalette = document.getElementById('color-palette');
 const colorsList = document.getElementsByClassName('color');
-const buttonClear = document.getElementById('clear-board')
+const buttonClear = document.getElementById('clear-board');
+const buttonRandomColor = document.getElementById('button-random-color');
 
 buttonClear.addEventListener('click', clearBoard);
+buttonRandomColor.addEventListener('click', randomColor)
 
 function createPalette() {
     for (let i = 0; i < 4; i += 1) {
@@ -50,6 +52,21 @@ function clearBoard() {
         let pixel = pixelList[i];
         pixel.style.backgroundColor = 'white';
     }
+}
+
+function randomColor() {
+    for (let i =0; i < colorsList.length; i += 1) {
+        let color = colorsList[i];
+        let red = generateRandom();
+        let blue = generateRandom();
+        let green = generateRandom();
+        let colorGenerated = `rgb(${red}, ${blue}, ${green})`;
+        color.style.backgroundColor = colorGenerated;
+    }
+}
+
+function generateRandom() {
+    return Math.floor(Math.random()*(255 - 0 + 1)) + 0;
 }
 
 createPalette();
