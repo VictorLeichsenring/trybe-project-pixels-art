@@ -105,23 +105,32 @@ function storage() {
         let pixel = pixelList[i];
         colorArray.push(pixel.style.backgroundColor);
     }
+
+    let boardSize = document.getElementsByClassName('linha').length;
+
     localStorage.setItem('pixelBoard', JSON.stringify(colorArray));
+    localStorage.setItem('boardSize', boardSize);
 }
+
+
 
 
 function restoreBoard() {
-    let storedPixelBoard = JSON.parse(localStorage.getItem('pixelBoard'));
-    let pixelList = document.getElementsByClassName('pixel');
-    if (storedPixelBoard && storedPixelBoard.length === pixelList.length) {
+    let storedColors = JSON.parse(localStorage.getItem('pixelBoard'));
+    let storedSize = localStorage.getItem('boardSize');
+
+    if (storedColors && storedSize) {
+        createBoard(storedSize);
+        let pixelList = document.getElementsByClassName('pixel');
         for (let i = 0; i < pixelList.length; i += 1) {
             let pixel = pixelList[i];
-            pixel.style.backgroundColor = storedPixelBoard[i];
+            pixel.style.backgroundColor = storedColors[i];
         }
+    } else {
+        // If there is no saved data, create a default board
+        createBoard(5);
     }
 }
-
-
-
 
 
 function gerarGrid() {
@@ -140,5 +149,4 @@ function gerarGrid() {
 }
 
 createPalette(4);
-createBoard(5);
 restoreBoard();
