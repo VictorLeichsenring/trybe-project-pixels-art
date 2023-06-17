@@ -1,6 +1,9 @@
 const pixelBoard = document.getElementById('pixel-board');
 const colorPalette = document.getElementById('color-palette');
 const colorsList = document.getElementsByClassName('color');
+const buttonClear = document.getElementById('clear-board')
+
+buttonClear.addEventListener('click', clearBoard);
 
 function createPalette() {
     for (let i = 0; i < 4; i += 1) {
@@ -38,6 +41,14 @@ function colorPixel(event) {
             let selectedColor = getComputedStyle(color).backgroundColor;
             pixelSelected.style.backgroundColor = selectedColor;
         }
+    }
+}
+
+function clearBoard() {
+    let pixelList = document.getElementsByClassName('pixel');
+    for (let i = 0; i < pixelList.length; i += 1) {
+        let pixel = pixelList[i];
+        pixel.style.backgroundColor = 'white';
     }
 }
 
