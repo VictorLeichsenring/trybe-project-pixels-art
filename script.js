@@ -16,6 +16,7 @@ function createBoard() {
         let element = document.createElement('div');
         element.classList.add('pixel');
         pixelBoard.appendChild(element);
+        element.addEventListener('click', colorPixel)
     }
 }
 
@@ -28,6 +29,17 @@ function colorSelect(event) {
     event.target.classList.add('selected');
 }
 
+function colorPixel(event) {
+    const pixelSelected = event.target;
+    for (let i =0; i < colorsList.length; i += 1) {
+        let color = colorsList[i];
+        let classes = color.classList;
+        if (classes.contains('selected')) {
+            let selectedColor = getComputedStyle(color).backgroundColor;
+            pixelSelected.style.backgroundColor = selectedColor;
+        }
+    }
+}
 
 createPalette();
 createBoard();
