@@ -4,11 +4,12 @@ const colorsList = document.getElementsByClassName('color');
 const buttonClear = document.getElementById('clear-board');
 const buttonRandomColor = document.getElementById('button-random-color');
 const buttonVQV = document.getElementById('generate-board');
-const inputGridSize = document.getElementById ('board-size');
+const inputGridSize = document.getElementById('board-size');
 
 buttonClear.addEventListener('click', clearBoard);
 buttonRandomColor.addEventListener('click', randomColor);
 buttonVQV.addEventListener('click', gerarGrid)
+
 
 
 
@@ -70,6 +71,7 @@ function colorPixel(event) {
             pixelSelected.style.backgroundColor = selectedColor;
         }
     }
+    storage();
 }
 
 function clearBoard() {
@@ -78,6 +80,7 @@ function clearBoard() {
         let pixel = pixelList[i];
         pixel.style.backgroundColor = 'white';
     }
+    storage();
 }
 
 function randomColor() {
@@ -95,14 +98,42 @@ function generateRandom() {
     return Math.floor(Math.random()*(255 - 0 + 1)) + 0;
 }
 
+function storage() {
+    let pixelList = document.getElementsByClassName('pixel');
+    let colorArray = [];
+    for (let i = 0; i < pixelList.length; i += 1) {
+        let pixel = pixelList[i];
+        colorArray.push(pixel.style.backgroundColor);
+    }
+    localStorage.setItem('pixelBoard', JSON.stringify(colorArray));
+}
+
+
+function restoreBoard() {
+    let storedPixelBoard = JSON.parse(localStorage.getItem('pixelBoard'));
+    let pixelList = document.getElementsByClassName('pixel');
+    if (storedPixelBoard && storedPixelBoard.length === pixelList.length) {
+        for (let i = 0; i < pixelList.length; i += 1) {
+            let pixel = pixelList[i];
+            pixel.style.backgroundColor = storedPixelBoard[i];
+        }
+    }
+}
+
+
+
+
+
 function gerarGrid() {
     let colunas = inputGridSize.value;
     if (colunas === '') {
         alert('Board inválido!')
     } else {
-        createBoard(colunas);  
+        createBoard(colunas);
+        storage();  
     }
 }
 
 createPalette(4);
 createBoard(5);
+restoreBoard();
