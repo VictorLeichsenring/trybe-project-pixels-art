@@ -3,27 +3,53 @@ const colorPalette = document.getElementById('color-palette');
 const colorsList = document.getElementsByClassName('color');
 const buttonClear = document.getElementById('clear-board');
 const buttonRandomColor = document.getElementById('button-random-color');
+const buttonVQV = document.getElementById('generate-board');
+const inputGridSize = document.getElementById ('board-size');
 
 buttonClear.addEventListener('click', clearBoard);
-buttonRandomColor.addEventListener('click', randomColor)
+buttonRandomColor.addEventListener('click', randomColor);
+buttonVQV.addEventListener('click', gerarGrid)
 
-function createPalette() {
-    for (let i = 0; i < 4; i += 1) {
+
+
+function createPalette(quantidade) {
+    for (let i = 0; i < quantidade; i += 1) {
         let element = document.createElement('div');
         element.classList.add('color');
         colorPalette.appendChild(element);
-        element.addEventListener('click', colorSelect)
+        element.addEventListener('click', colorSelect);
     }
 }
 
-function createBoard() {
-    for (let i = 0; i < 25; i += 1) {
-        let element = document.createElement('div');
-        element.classList.add('pixel');
-        pixelBoard.appendChild(element);
-        element.addEventListener('click', colorPixel)
+function createBoard(colunas) {
+    const linhas = colunas;
+  
+    const pixelBoard = document.getElementById('pixel-board');
+  
+    // Remover todos os elementos com a classe 'pixel'
+    const elementosPixel = pixelBoard.querySelectorAll('.pixel');
+    elementosPixel.forEach((elemento) => {
+      elemento.remove();
+    });
+  
+    pixelBoard.innerHTML = '';
+  
+    for (let i = 0; i < linhas; i++) {
+      const linha = document.createElement('div');
+      linha.classList.add('linha');
+  
+      for (let j = 0; j < colunas; j++) {
+        const pixel = document.createElement('div');
+        pixel.classList.add('pixel');
+        linha.appendChild(pixel);
+        pixel.addEventListener('click', colorPixel);
+      }
+  
+      pixelBoard.appendChild(linha);
     }
-}
+  }
+  
+  
 
 function colorSelect(event) {
     for (let i =0; i < colorsList.length; i += 1) {
@@ -69,5 +95,14 @@ function generateRandom() {
     return Math.floor(Math.random()*(255 - 0 + 1)) + 0;
 }
 
-createPalette();
-createBoard();
+function gerarGrid() {
+    let colunas = inputGridSize.value;
+    if (colunas === '') {
+        alert('Board inválido!')
+    } else {
+        createBoard(colunas);  
+    }
+}
+
+createPalette(4);
+createBoard(5);
