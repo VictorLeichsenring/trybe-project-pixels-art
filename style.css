@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 #title {
   text-align: center;
 }
@@ -38,18 +39,15 @@
 }
 
 .center-button {
-  
   text-align: center;
 }
 
 #clear-board {
   margin: 20px;
-  
 }
 
 #pixel-board {
   display: inline-block;
-  
 }
 
 .pixel {
